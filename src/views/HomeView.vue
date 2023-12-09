@@ -12,16 +12,16 @@
 		</div>
 
 		<div class="d-flex justify-content-center mt-5">
-			<a href="https://itch.io/your-studio-name" target="_blank">
+			<a href="#" target="_blank">
 				<img src="@/assets/icons/itchio.svg" alt="Itch.io" width="32">
 			</a>
-			<a href="https://discord.gg/your-discord-server" target="_blank" class="ms-3">
+			<a href="#" target="_blank" class="ms-3">
 				<img src="@/assets/icons/discord.svg" alt="Discord" width="32">
 			</a>
 			<a href="#" target="_blank" class="ms-3">
 				<img src="@/assets/icons/x-twitter.svg" alt="X (Twitter)" width="32">
 			</a>
-			<a href="https://t.me/your-telegram-channel" target="_blank" class="ms-3">
+			<a href="#" target="_blank" class="ms-3">
 				<img src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
 			</a>
 		</div>
