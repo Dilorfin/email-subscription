@@ -24,6 +24,13 @@
 			<a href="#" target="_blank" class="ms-3">
 				<img src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
 			</a>
+			
+		</div>
+		<div class="mt-2">
+			<a href="https://www.buymeacoffee.com/" target="_blank" class="btn btn-outline-dark">
+				<img src="@/assets/icons/bmc-logo.svg" height="24">
+				Buy me a coffee
+			</a>
 		</div>
 	</div>
 </template>
