@@ -10,24 +10,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Company.Function
 {
-    public static class HttpTrigger1
+    public static class UnsubscribeEmail
     {
-        [FunctionName("HttpTrigger1")]
+        [FunctionName("UnsubscribeEmail")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "email/unsubscribe")] HttpRequest req,
             ILogger log)
         {
             var emailValidator = new EmailAddressAttribute();
-            
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            if(emailValidator.IsValid(data.email))
+            EmailModel data = JsonConvert.DeserializeObject<EmailModel>(requestBody);
+
+            log.LogInformation($"input {data.email}");
+            if (!emailValidator.IsValid(data.email))
             {
-                return new BadRequestObjectResult($"email subscribed {data.email}");
+                return new BadRequestObjectResult($"invalid email {data.email}");
             }
 
-            return new OkObjectResult($"email subscribed {data.email}");
+            return new OkObjectResult($"email unsubscribed {data.email}");
         }
     }
 }
