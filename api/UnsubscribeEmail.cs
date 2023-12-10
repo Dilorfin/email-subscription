@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Company.Function.Models;
 
 namespace Company.Function
 {
@@ -22,13 +23,13 @@ namespace Company.Function
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             EmailModel data = JsonConvert.DeserializeObject<EmailModel>(requestBody);
 
-            log.LogInformation($"input {data.email}");
-            if (!emailValidator.IsValid(data.email))
+            log.LogInformation($"input {data.Email}");
+            if (!emailValidator.IsValid(data.Email))
             {
-                return new BadRequestObjectResult($"invalid email {data.email}");
+                return new BadRequestObjectResult($"invalid email {data.Email}");
             }
 
-            return new OkObjectResult($"email unsubscribed {data.email}");
+            return new OkObjectResult($"email unsubscribed {data.Email}");
         }
     }
 }

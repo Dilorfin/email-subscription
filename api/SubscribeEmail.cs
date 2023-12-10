@@ -7,33 +7,35 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Company.Function.DAL;
+using Company.Function.Models;
 
 namespace Company.Function
 {
-    record EmailModel (string email);
-
     public static class SubscribeEmail
     {
         [FunctionName("SubscribeEmail")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "email/subscribe")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "email/subscribe")]
+            HttpRequest req,
             ILogger log)
         {
-
-            /*CosmosClient client = new CosmosClient(connectionString, clientOptions);
-            Database database = await client.CreateDatabaseIfNotExistsAsync(databaseId);*/
             var emailValidator = new EmailAddressAttribute();
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            EmailModel data = JsonConvert.DeserializeObject<EmailModel>(requestBody);
+            EmailModel email = JsonConvert.DeserializeObject<EmailModel>(requestBody);
 
-            log.LogInformation($"input {data.email}");
-            if (!emailValidator.IsValid(data.email))
+            log.LogInformation($"input {email.Email}");
+            if (!emailValidator.IsValid(email.Email))
             {
-                return new BadRequestObjectResult($"invalid email {data.email}");
+                return new BadRequestObjectResult($"invalid email {email.Email}");
             }
 
-            return new OkObjectResult($"email subscribed {data.email}");
+            var emailRepository = new EmailRepository();
+
+            await emailRepository.Add(email);
+
+            return new OkObjectResult($"email subscribed {email.Email}");
         }
     }
 }
