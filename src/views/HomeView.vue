@@ -4,16 +4,22 @@
 
 		<div class="row">
 			<div class="d-flex justify-content-center">
-				<div class="input-group mb-3 flex-grow-1">
-					<input type="email" class="form-control" placeholder="Enter your email" v-model="emailInput" :disabled="requestSent">
+				<div class="input-group">
+					<input type="email" class="form-control" placeholder="Enter your email" v-model="emailInput"
+						:disabled="requestSent">
 					<button class="btn btn-outline-dark" @click="onClickSubscribe" :disabled="requestSent">
 						<!--https://codepen.io/coopergoeke/pen/wvaYMbJ-->
 						<!--https://codepen.io/elifitch/pen/apxxVL-->
 						<!--https://codepen.io/aaroniker/pen/bGVGNrV-->
-						<span :class="{ 'd-none': !requestSent }" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+						<span :class="{ 'd-none': !requestSent }" class="spinner-border spinner-border-sm me-2"
+							aria-hidden="true"></span>
 						<span>Subscribe</span>
 					</button>
 				</div>
+			</div>
+			<div>
+				<span class="text-success" :class="{ 'd-none': !showSuccessMessage }">Thank you for subscription!</span>
+				<span class="text-danger" :class="{ 'd-none': !showErrorMessage }">{{ errorMessage }}</span>
 			</div>
 		</div>
 
@@ -30,7 +36,7 @@
 			<a href="https://t.me/untitled_game_by_dilorfin" target="_blank" class="ms-3">
 				<img src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
 			</a>
-			
+
 		</div>
 		<div class="mt-2">
 			<a href="https://www.buymeacoffee.com/" target="_blank" class="btn btn-outline-dark">
@@ -38,34 +44,58 @@
 				Buy me a coffee
 			</a>
 		</div>
-	</div>
+		</div>
 </template>
 
 <script setup lang="ts">
 
 import { ref, type Ref } from 'vue'
 
-const requestSent : Ref<boolean> = ref(false);
-const emailInput : Ref<string> = ref('');
+const requestSent: Ref<boolean> = ref(false);
+const showErrorMessage: Ref<boolean> = ref(false);
+const showSuccessMessage: Ref<boolean> = ref(false);
 
-async function onClickSubscribe(event : Event) {
+const emailInput: Ref<string> = ref('');
+const errorMessage: Ref<string> = ref('');
+
+const validateEmail = (email: string) =>
+{
+	const matches: RegExpMatchArray | null = email.toLowerCase().match(
+		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	);
+	return matches && matches.length > 0;
+};
+
+async function onClickSubscribe(event: Event)
+{
+	showErrorMessage.value = false;
+	showSuccessMessage.value = false;
+
+	if (!validateEmail(emailInput.value))
+	{
+		errorMessage.value = `'${emailInput.value}' doesn't seem to be valid email...`;
+		showErrorMessage.value = true;
+		return;
+	}
+
 	requestSent.value = true;
-	
-	const test = JSON.stringify({ email: emailInput.value });
-	const response : Response = await fetch("/api/email/subscribe", {
+	const response: Response = await fetch("/api/email/subscribe", {
 		method: "POST",
-		body: test
+		body: JSON.stringify({ email: emailInput.value })
 	});
-
 	requestSent.value = false;
+
 	if (response.ok)
 	{
-		console.log("response OK");
+		showSuccessMessage.value = true;
 	}
 	else 
 	{
 		const { errorId } = await (response).json();
 		console.log(`bad request, errorId: ${errorId}`);
+
+		errorMessage.value = `Error occurred: ${errorId}`;
+		showErrorMessage.value = true;
 	}
 }
 
