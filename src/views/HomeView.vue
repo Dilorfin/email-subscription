@@ -18,7 +18,7 @@
 				</div>
 			</div>
 			<div>
-				<span class="text-success" :class="{ 'd-none': !showSuccessMessage }">Thank you for subscription!</span>
+				<span class="text-warning" :class="{ 'd-none': !showSuccessMessage }">Thank you for subscription!</span>
 				<span class="text-danger" :class="{ 'd-none': !showErrorMessage }">{{ errorMessage }}</span>
 			</div>
 		</div>
