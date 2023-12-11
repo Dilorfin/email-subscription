@@ -25,16 +25,16 @@
 
 		<div class="d-flex justify-content-center mt-5">
 			<a href="https://dilorfin.itch.io/" target="_blank">
-				<img src="@/assets/icons/itchio.svg" alt="Itch.io" width="32">
+				<img class="logo-link" src="@/assets/icons/itchio.svg" alt="Itch.io" width="32">
 			</a>
 			<a href="https://discord.gg/F3XGNBuKBS" target="_blank" class="ms-3">
-				<img src="@/assets/icons/discord.svg" alt="Discord" width="32">
+				<img class="logo-link" src="@/assets/icons/discord.svg" alt="Discord" width="32">
 			</a>
 			<a href="https://twitter.com/dilorfin" target="_blank" class="ms-3">
-				<img src="@/assets/icons/x-twitter.svg" alt="X (Twitter)" width="32">
+				<img class="logo-link" src="@/assets/icons/x-twitter.svg" alt="X (Twitter)" width="32">
 			</a>
 			<a href="https://t.me/untitled_game_by_dilorfin" target="_blank" class="ms-3">
-				<img src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
+				<img class="logo-link" src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
 			</a>
 
 		</div>
@@ -100,3 +100,9 @@ async function onClickSubscribe(event: Event)
 }
 
 </script>
+
+<style lang="scss">
+.logo-link:hover {
+	filter: drop-shadow(0 0 0.035em #000);
+}
+</style>
