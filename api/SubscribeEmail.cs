@@ -28,12 +28,24 @@ namespace Company.Function
             log.LogInformation($"input {email.Email}");
             if (!emailValidator.IsValid(email.Email))
             {
-                return new BadRequestObjectResult($"invalid email {email.Email}");
+                return new BadRequestObjectResult(new
+                {
+                    errorId = 0,
+                    errorMessage = $"invalid email {email.Email}"
+                });
             }
 
             var emailRepository = new EmailRepository();
 
-            await emailRepository.Add(email);
+            var insertedEmail = await emailRepository.Add(email);
+            if (insertedEmail == null)
+            {
+                return new BadRequestObjectResult(new
+                {
+                    errorId = 1,
+                    errorMessage = $"email is already subscribed {email.Email}"
+                });
+            }
 
             return new OkObjectResult($"email subscribed {email.Email}");
         }

@@ -68,6 +68,10 @@ const validateEmail = (email: string) =>
 
 async function onClickSubscribe(event: Event)
 {
+	const errorCodes : Map<number, string> = new Map<number, string>();
+	errorCodes.set(0, "Email doesn't seem to be valid email...");
+	errorCodes.set(1, "Email is already subscribed");
+
 	showErrorMessage.value = false;
 	showSuccessMessage.value = false;
 
@@ -91,10 +95,10 @@ async function onClickSubscribe(event: Event)
 	}
 	else 
 	{
-		const { errorId } = await (response).json();
+		const { errorId } : {errorId : number } = await response.json();
 		console.log(`bad request, errorId: ${errorId}`);
 
-		errorMessage.value = `Error occurred: ${errorId}`;
+		errorMessage.value = errorCodes.get(errorId) ?? "Unknown error";
 		showErrorMessage.value = true;
 	}
 }

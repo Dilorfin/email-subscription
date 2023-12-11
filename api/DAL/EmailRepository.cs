@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Company.Function.Models;
 using Microsoft.Azure.Cosmos;
-using Microsoft.Extensions.Logging;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace Company.Function.DAL
 {
@@ -23,10 +24,28 @@ namespace Company.Function.DAL
         // The container we will create.
         private Container _container;
 
+        public async Task<bool> Contains(string email)
+        {
+            var queryable = this._container.GetItemLinqQueryable<EmailModel>();
+            var matches = queryable.Where(e => e.Email == email);
+            using FeedIterator<EmailModel> linqFeed = matches.ToFeedIterator();
+            while (linqFeed.HasMoreResults)
+            {
+                var response = await linqFeed.ReadNextAsync();
+                return response.Count > 0;
+            }
+            return false;
+        }
+
         public async Task<EmailModel> Add(EmailModel email)
         {
             await Initialize();
-        
+
+            if (await Contains(email.Email))
+            {
+                return null;
+            }
+
             email.Id = Guid.NewGuid().ToString();
             return await _container.CreateItemAsync<EmailModel>(email);
         }
