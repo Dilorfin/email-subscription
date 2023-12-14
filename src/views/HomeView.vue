@@ -24,19 +24,21 @@
 		</div>
 
 		<div class="d-flex justify-content-center mt-5">
-			<a href="https://dilorfin.itch.io/" target="_blank">
-				<img class="logo-link" src="@/assets/icons/itchio.svg" alt="Itch.io" width="32">
+			<a href="https://t.me/even_wizards_go_to_work" target="_blank" >
+				<img class="logo-link" src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
 			</a>
 			<a href="https://discord.gg/F3XGNBuKBS" target="_blank" class="ms-3">
 				<img class="logo-link" src="@/assets/icons/discord.svg" alt="Discord" width="32">
 			</a>
+			<a href="https://www.reddit.com/r/EvenWizardsGoToWork/" target="_blank" class="ms-3">
+				<img class="logo-link" src="@/assets/icons/reddit.svg" alt="Reddit" width="32">
+			</a>
+			<a href="https://dilorfin.itch.io/" target="_blank" class="ms-3">
+				<img class="logo-link" src="@/assets/icons/itchio.svg" alt="Itch.io" width="32">
+			</a>
 			<a href="https://twitter.com/dilorfin" target="_blank" class="ms-3">
 				<img class="logo-link" src="@/assets/icons/x-twitter.svg" alt="X (Twitter)" width="32">
 			</a>
-			<a href="https://t.me/untitled_game_by_dilorfin" target="_blank" class="ms-3">
-				<img class="logo-link" src="@/assets/icons/telegram.svg" alt="Telegram" width="32">
-			</a>
-
 		</div>
 		<div class="mt-2">
 			<a href="https://www.buymeacoffee.com/" target="_blank" class="btn btn-outline-dark">
