@@ -41,7 +41,7 @@
 			</a>
 		</div>
 		<div class="mt-2">
-			<a href="https://www.buymeacoffee.com/" target="_blank" class="btn btn-outline-dark">
+			<a href="https://www.buymeacoffee.com/dilorfin" target="_blank" class="btn btn-outline-dark">
 				<img src="@/assets/icons/bmc-logo.svg" height="24">
 				Buy me a coffee
 			</a>
